@@ -101,13 +101,13 @@ For the model hyperparameters, I stuck with a mean of 0 and standard deviation/s
 
 BATCH_SIZE = 128
 EPOCH 20 ...
-Validation Accuracy = 0.953
+Validation Accuracy = 0.941
 
 ####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:   
 * training set accuracy of 0.891.   
-* validation set accuracy of 0.95.  
+* validation set accuracy of 0.94.  
 * test set accuracy of 0.89. 
 
 I picked Lenet architecture for this problem, as it is a well studied, documented and tested approach for image classification problem at hand. Initially, I tested with various "epoch", "batch size" and "learning rate" values. I noticed that as my epoch's increase, my accuracy started dicreasing. Then I introduced the concept of "dropouts" in the model, which eventually helped to reduce overfitting.   
@@ -139,23 +139,23 @@ Here are the results of the prediction:
 | Railroad     			| Priority road 										|
 | Yield					| Yield											|
 | 30 km/h	      		| Road work					 				|
-| Slippery Road			| Priority road      							|
+| Slippery Road			| Slippery road      							|
 
 
-The model was able to correctly guess 2 of the 5 traffic signs, which gives an accuracy of 40%. The original model was giving test set accuracy of 89%, which was way above the the accuracy on random images pulled from the net.
+The model was able to correctly guess 3 of the 5 traffic signs, which gives an accuracy of 60%. The original model was giving test set accuracy of 89%, which was way above the the accuracy on random images pulled from the net.
 
 ####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability.
 
 The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
 
-For the first image, the model is relatively sure that this is a stop sign, and the image does contain a stop sign. The top five soft max probabilities were  7.54206419  7.53191471  2.55825424  1.63337624  1.63040662 and and predicted classes were [17 14  4 29  0], the highest probability was of "No Entry" sign, which is correct.
+For the first image, the model is relatively sure that this is a stop sign, and the image does contain a stop sign. The top five soft max probabilities were  7.53496230e-01,   2.44850814e-01,   1.28227135e-03, 1.31779772e-04, 7.23789635e-05 and and predicted classes were [17, 14, 15, 13, 22], the highest probability was of "No Entry" sign, which is correct.
 
-For the second image, the top five soft max probabilities were  2.45833445  1.88949847  1.72219241  0.81298828  0.54317665 and and predicted classes were [12 10 11 42 20], the highest probability was of "Priority road" sign, which is not correct.
+For the second image, the top five soft max probabilities were  2.32064888e-01,   1.46351159e-01,   1.36603251e-01, 1.30658001e-01, 1.18910760e-01], and and predicted classes were [23, 11, 19, 30, 12], the highest probability was of "Slippery road" sign, which is correct.
 
-For the third image, the top five soft max probabilities were  5.44254351  3.40146494  1.23354197  0.68703526 -0.39592338 and and predicted classes were [13 10  9 25  3], the highest probability was of "Yield" sign, which is correct.
+For the third image, the top five soft max probabilities were  7.76498497e-01,   1.71019733e-01,   2.48671062e-02, 9.30203497e-03, 4.53942874e-03 and and predicted classes were [13, 10, 12,  9,  5], the highest probability was of "Yield" sign, which is correct.
 
-For the fourth image, the top five soft max probabilities were  6.84033918  1.77665174  0.89314258  0.7783621   0.23325844 and and predicted classes were [25 31 29 20 13], the highest probability was of "Road work" sign, which is not correct.
+For the fourth image, the top five soft max probabilities were  9.16136742e-01,   2.31424551e-02,   1.85112618e-02, 1.63072962e-02,   6.41634129e-03 and and predicted classes were [25, 31,  5,  3, 13], the highest probability was of "Road work" sign, which is not correct.
 
-For the fifth image, the top five soft max probabilities were  16.34305763   2.44872212   0.78496355  -0.11627989  -0.53020555 and and predicted classes were [12 11 26 17 10], the highest probability was of "Priority road" sign, which is not correct.
+For the fifth image, the top five soft max probabilities were  9.99998569e-01,   5.80454355e-07,   3.76286920e-07, 1.61356624e-07,   9.77846071e-08 and and predicted classes were [12, 41, 17, 10, 32], the highest probability was of "Priority road" sign, which is not correct.
 
 
