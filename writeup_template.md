@@ -54,7 +54,13 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 ###Design and Test a Model Architecture
 
 ####1. Preprocessing the image data.
-- Preprocessing was done using normalization as tought in class.
+- Preprocessing was done using normalization as tought in class. I chose normalization becasue ff we didn't scale our input training vectors, the ranges of our distributions of feature values would likely be different for each feature, and thus the learning rate would cause corrections in each dimension that would differ (proportionally speaking) from one another. We might be over compensating a correction in one weight dimension while undercompensating in another.
+
+This is non-ideal as we might find ourselves in a oscillating (unable to center onto a better maxima in cost(weights) space) state or in a slow moving (traveling too slow to get to a better maxima) state.
+
+It is of course possible to have a per-weight learning rate, but it's yet more hyperparameters to introduce into an already complicated network that we'd also have to optimize to find. Generally learning rates are scalars.
+
+Thus we try to normalize images before using them as input into NN (or any gradient based) algorithm.
 
 Here is an example of an original image after normalization:
 
@@ -89,30 +95,23 @@ My final model consisted of the following layers:
 
 ####3. Training Model approach
 
-I utilized the AdamOptimizer from within TensorFLow to optimize. Also, I tried a few different batch sizes (see below), but settled at 128 as that seemed to perform better than batch sizes larger or smaller than that. I ran only 10 epochs, primarily as a result of time and further performance gains, as it was already arriving at nearly 97-98% validation accuracy, and further epochs resulted in only marginal gains while continuing to increase time incurred in training. Additionally, there is no guarantee that further improvement in validation accuracy does anything other than just overfit the data (although adding dropout to the model does help in that regard).
+I utilized the AdamOptimizer from within TensorFLow to optimize. Also, I tried a few different batch sizes (see below), but settled at 128 as that seemed to perform better than batch sizes larger or smaller than that. I ran 20 epochs, primarily as a result of time and further performance gains, as it was already arriving at nearly 97-98% validation accuracy, and further epochs resulted in only marginal gains while continuing to increase time incurred in training. Additionally, there is no guarantee that further improvement in validation accuracy does anything other than just overfit the data (although adding dropout to the model does help in that regard).
+
 For the model hyperparameters, I stuck with a mean of 0 and standard deviation/sigma of 0.1. An important aspect of the model is trying to keep a mean of 0 and equal variance, so these hyperparameters attempt to follow this philosophy. I tried a few other standard deviations but found a smaller one did not really help, while a larger one vastly increased the training time necessary.
 
-BATCH_SIZE = 150
-EPOCH 20 ...
-Validation Accuracy = 0.979
-
-BATCH_SIZE = 150
-EPOCH 12 ...
-Validation Accuracy = 0.970
-
 BATCH_SIZE = 128
-EPOCH 12 ...
-Validation Accuracy = 0.970
+EPOCH 20 ...
+Validation Accuracy = 0.953
 
 ####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:   
 * training set accuracy of 0.891.   
-* validation set accuracy of 0.88.  
-* test set accuracy of 0.84. 
+* validation set accuracy of 0.95.  
+* test set accuracy of 0.89. 
 
 I picked Lenet architecture for this problem, as it is a well studied, documented and tested approach for image classification problem at hand. Initially, I tested with various "epoch", "batch size" and "learning rate" values. I noticed that as my epoch's increase, my accuracy started dicreasing. Then I introduced the concept of "dropouts" in the model, which eventually helped to reduce overfitting.   
-After that, reducing the "epoch's" didn't seem to reduce the efficiency of my model, but it definitely reduced the run time. So I settled with a value of 12, which was giving me a run time of 3 minutes on a mac book pro with 16 Gigs of ram and Intel i5 Processor with integrated graphics.  
+After that, reducing the "epoch's" didn't seem to reduce the efficiency of my model, but it definitely reduced the run time. So I settled with a value of 20, which was giving me a run time of ~5 minutes on a mac book pro with 16 Gigs of ram and Intel i5 Processor with integrated graphics.  
 Changing the batch size from 150 to 128 increased some percentage of validation accuracy. It did increase the run time, but didn't effect the accuracy much. that's why I chose 128 as batch size.  
 Droupout's "keep probability" was set to 0.5, so as to keep atleast half test data while training.
 I didn't fiddle much with the "learning rate" as it was initially set to 0.001, so it kind of gave me reasonable results in somewhat reasonable time.  
@@ -143,7 +142,7 @@ Here are the results of the prediction:
 | Slippery Road			| Priority road      							|
 
 
-The model was able to correctly guess 2 of the 5 traffic signs, which gives an accuracy of 40%.
+The model was able to correctly guess 2 of the 5 traffic signs, which gives an accuracy of 40%. The original model was giving test set accuracy of 89%, which was way above the the accuracy on random images pulled from the net.
 
 ####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability.
 
